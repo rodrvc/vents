@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.validation.IntegerValidator?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="783.0" prefWidth="1386.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.VentaController">
+   <children>
+      <TableView fx:id="tablaProductos" layoutX="52.0" layoutY="46.0" prefHeight="222.0" prefWidth="686.0" stylesheets="@tablecss.css">
+        <columns>
+          <TableColumn fx:id="clmCodigoProducto" prefWidth="75.0" text="CODIGO" />
+          <TableColumn fx:id="clmNombreProducto" prefWidth="96.0" text="NOMBRE" />
+            <TableColumn fx:id="clmDescripcionProducto" prefWidth="104.0" text="DESCRIPCION" />
+            <TableColumn fx:id="clmProveedorProducto" minWidth="0.0" prefWidth="100.0" text="PROVEEDOR" />
+            <TableColumn fx:id="clmPrecioProducto" onEditStart="#tableEditable" prefWidth="169.0" text="PRECIO" />
+            <TableColumn fx:id="clmStock" prefWidth="124.0" text="STOCK" />
+        </columns>
+         <styleClass>
+            <String fx:value="tree-table-view" />
+            <String fx:value="tree-table-cell" />
+         </styleClass>
+      </TableView>
+      <Label layoutX="300.0" layoutY="342.0" prefHeight="51.0" prefWidth="64.0" text="Catidad">
+         <font>
+            <Font name="Yu Gothic UI Semilight" size="17.0" />
+         </font></Label>
+      <Label layoutX="897.0" layoutY="577.0" prefHeight="21.0" prefWidth="82.0" text="PRECIO">
+         <font>
+            <Font name="Yu Gothic UI Regular" size="15.0" />
+         </font></Label>
+      <Label fx:id="lblPrecio" layoutX="1055.0" layoutY="570.0" prefHeight="35.0" prefWidth="233.0" text="PRECIO">
+         <font>
+            <Font name="Yu Gothic UI Regular" size="24.0" />
+         </font>
+      </Label>
+      <Spinner fx:id="spinCantidad" layoutX="385.0" layoutY="351.0" prefHeight="33.0" prefWidth="100.0" />
+      <JFXButton fx:id="btnAgregarAlaLista" layoutX="485.0" layoutY="350.0" onAction="#onActionBtnAgregarAlaLista" prefHeight="35.0" prefWidth="167.0" style="-fx-background-color: rgb(0,160,220);" text="AGREGAR A LISTA" textFill="WHITE" />
+      <TextField fx:id="txtBuscarUsuario" layoutX="385.0" layoutY="529.0" prefHeight="33.0" prefWidth="175.0" promptText="Rut cliente" />
+      <Separator layoutX="46.0" layoutY="410.0" prefHeight="1.0" prefWidth="677.0" />
+      <Label layoutX="51.0" layoutY="421.0" prefHeight="21.0" prefWidth="107.0" text="VENTA">
+         <font>
+            <Font name="Yu Gothic UI Regular" size="23.0" />
+         </font></Label>
+      <Label layoutX="52.0" layoutY="535.0" prefHeight="21.0" prefWidth="107.0" text="Cliente">
+         <font>
+            <Font name="Yu Gothic UI Light" size="15.0" />
+         </font></Label>
+      <Label fx:id="lblPreviewCliente" layoutX="145.0" layoutY="535.0" prefHeight="21.0" prefWidth="107.0" text="No Especificado">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="15.0" />
+         </font></Label>
+      <Label layoutX="30.0" layoutY="305.0" prefHeight="21.0" prefWidth="107.0" text="Producto">
+         <font>
+            <Font name="Yu Gothic UI Light" size="15.0" />
+         </font></Label>
+      <Label fx:id="lblPreviewProducto" layoutX="145.0" layoutY="305.0" prefHeight="21.0" prefWidth="107.0" text="No Especificado">
+         <font>
+            <Font name="Yu Gothic UI Regular" size="15.0" />
+         </font></Label>
+      <Label layoutX="30.0" layoutY="357.0" prefHeight="21.0" prefWidth="82.0" text="Precio item">
+         <font>
+            <Font name="Yu Gothic UI Light" size="15.0" />
+         </font></Label>
+      <Label fx:id="previewPrecio" layoutX="145.0" layoutY="357.0" prefHeight="21.0" prefWidth="123.0" text="No especificado">
+         <font>
+            <Font name="Yu Gothic UI Regular" size="15.0" />
+         </font></Label>
+      <TableView fx:id="carritoDeCompra" layoutX="752.0" layoutY="55.0" prefHeight="451.0" prefWidth="585.0">
+        <columns>
+          <TableColumn fx:id="clmCodigoProductoCarritoCompras" prefWidth="117.0" text="CODIGO" />
+          <TableColumn fx:id="clmNombreProductoCarritoCompra" prefWidth="222.0" text="NOMBRE PRODUCTO" />
+            <TableColumn fx:id="clmCantidadCarritoDeCompra" prefWidth="98.0" text="CANTIDAD" />
+            <TableColumn fx:id="clmTotalCarritoCompras" prefWidth="164.0" text="TOTAL" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnBuscarUsuario" layoutX="561.0" layoutY="529.0" onAction="#setUsuarioInstanciaVenta" prefHeight="33.0" prefWidth="82.0" style="-fx-background-color: rgb(0,160,220);" text="BUSCAR" textFill="WHITE">
+         <font>
+            <Font name="Yu Gothic Light" size="15.0" />
+         </font></JFXButton>
+      <Label layoutX="58.0" layoutY="14.0" prefHeight="21.0" prefWidth="82.0" text="Venta Nº : " />
+      <Label fx:id="lblInstanciaVenta" layoutX="142.0" layoutY="14.0" prefHeight="21.0" prefWidth="82.0" />
+      <IntegerValidator layoutX="908.0" layoutY="645.0" />
+      <JFXButton fx:id="btnRealizarVenta" layoutX="1030.0" layoutY="628.0" onAction="#btnRealizarVenta" prefHeight="65.0" prefWidth="142.0" style="-fx-background-color: rgb(0,160,220);" text="VENTA" textFill="WHITE">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="24.0" />
+         </font></JFXButton>
+      <TextField fx:id="txtIntMontoPagoCliente" layoutX="115.0" layoutY="644.0" prefHeight="33.0" prefWidth="167.0" promptText="monto a pagar" />
+      <Label layoutX="51.0" layoutY="650.0" prefHeight="21.0" prefWidth="107.0" text="Pago">
+         <font>
+            <Font name="Yu Gothic UI Light" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
