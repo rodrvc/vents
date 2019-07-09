@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="1500.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.ProductoController">
+   <children>
+      <TableView fx:id="tablaProductos" layoutX="683.0" layoutY="36.0" prefHeight="336.0" prefWidth="782.0">
+        <columns>
+          <TableColumn fx:id="clmCodigoProducto" prefWidth="113.0" text="Codigo" />
+          <TableColumn fx:id="clmNombreProducto" prefWidth="112.0" text="Nombre" />
+            <TableColumn fx:id="clmDescripcionProducto" prefWidth="201.0" text="Descripcion" />
+            <TableColumn fx:id="clmProveedorProducto" prefWidth="75.0" text="Proveedor" />
+            <TableColumn fx:id="clmStock" prefWidth="101.0" text="Stock" />
+            <TableColumn fx:id="clmPrecioProducto" prefWidth="179.0" resizable="false" text="Precio" />
+        </columns>
+      </TableView>
+      <TextField fx:id="nombreProveedor" layoutX="70.0" layoutY="36.0" prefHeight="31.0" prefWidth="299.0" promptText="Nombre Proveedor" />
+      <TextField fx:id="txtRutProveedor" layoutX="70.0" layoutY="86.0" promptText="Rut Proveedor" />
+      <TextField fx:id="txtEmailProveedor" layoutX="70.0" layoutY="142.0" promptText="Email" />
+      <TextField fx:id="txtDireccionProveedor" layoutX="70.0" layoutY="204.0" promptText="Direccion" />
+      <TextField fx:id="CategoriaProveedor" layoutX="70.0" layoutY="257.0" promptText="Categoria" />
+      <JFXButton fx:id="btnAgregarProveedor" layoutX="70.0" layoutY="341.0" prefHeight="53.0" prefWidth="154.0" style="-fx-background-color: #32c8ff;" text="Agregar Proveedor" textFill="WHITE" />
+      <JFXButton fx:id="btnEliminarProveedor" layoutX="1168.0" layoutY="394.0" prefHeight="43.0" prefWidth="141.0" style="-fx-background-color: grey;" text="EliminarProveedor" textFill="WHITE" />
+   </children>
+</AnchorPane>
