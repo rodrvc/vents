@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="1004.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controler.ProductoController">
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="1500.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.ProductoController">
    <children>
-      <TableView fx:id="tablaProductos" layoutX="219.0" layoutY="23.0" prefHeight="336.0" prefWidth="782.0">
+      <TableView fx:id="tablaProductos" layoutX="683.0" layoutY="36.0" prefHeight="336.0" prefWidth="782.0">
         <columns>
           <TableColumn fx:id="clmCodigoProducto" prefWidth="113.0" text="Codigo" />
           <TableColumn fx:id="clmNombreProducto" prefWidth="112.0" text="Nombre" />
             <TableColumn fx:id="clmDescripcionProducto" prefWidth="201.0" text="Descripcion" />
             <TableColumn fx:id="clmProveedorProducto" prefWidth="75.0" text="Proveedor" />
             <TableColumn fx:id="clmStock" prefWidth="101.0" text="Stock" />
-            <TableColumn fx:id="clmPrecioProducto" prefWidth="91.0" text="Precio" />
+            <TableColumn fx:id="clmPrecioProducto" prefWidth="179.0" resizable="false" text="Precio" />
         </columns>
       </TableView>
+      <TextField fx:id="txtCodigo" layoutX="70.0" layoutY="86.0" />
+      <TextField fx:id="txtNombre" layoutX="70.0" layoutY="142.0" />
+      <TextField fx:id="txtDescripcion" layoutX="70.0" layoutY="406.0" prefHeight="31.0" prefWidth="299.0" />
+      <JFXComboBox fx:id="cbProveedor" layoutX="70.0" layoutY="314.0" prefHeight="31.0" prefWidth="187.0" />
+      <TextField fx:id="txtProveedor" layoutX="70.0" layoutY="204.0" />
+      <TextField fx:id="txtStock" layoutX="70.0" layoutY="257.0" />
    </children>
 </AnchorPane>
