@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="1500.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.ProductoController">
+   <children>
+      <TableView fx:id="tablaProveedor" layoutX="683.0" layoutY="36.0" prefHeight="336.0" prefWidth="782.0">
+        <columns>
+          <TableColumn fx:id="clmRutProveedor" prefWidth="113.0" text="RUT" />
+          <TableColumn fx:id="clmNombreProveedor" prefWidth="112.0" text="Nombre" />
+            <TableColumn fx:id="clmEmailProveedor" prefWidth="201.0" text="Email" />
+            <TableColumn fx:id="clmDireccionProv" prefWidth="179.0" text="Direccion" />
+            <TableColumn fx:id="clmCategoriaProv" prefWidth="176.0" text="Categoria" />
+        </columns>
+      </TableView>
+      <TextField fx:id="nombreProveedor" layoutX="108.0" layoutY="36.0" prefHeight="31.0" prefWidth="299.0" promptText="Nombre Proveedor" />
+      <TextField fx:id="txtRutProveedor" layoutX="108.0" layoutY="86.0" promptText="Rut Proveedor" />
+      <TextField fx:id="txtEmailProveedor" layoutX="108.0" layoutY="141.0" promptText="Email" />
+      <TextField fx:id="txtDireccionProveedor" layoutX="108.0" layoutY="204.0" promptText="Direccion" />
+      <TextField fx:id="CategoriaProveedor" layoutX="108.0" layoutY="259.0" promptText="Categoria" />
+      <JFXButton fx:id="btnAgregarProveedor" layoutX="108.0" layoutY="346.0" prefHeight="53.0" prefWidth="154.0" style="-fx-background-color: #32c8ff;" text="Agregar Proveedor" textFill="WHITE" />
+      <JFXButton fx:id="btnEliminarProveedor" layoutX="1168.0" layoutY="394.0" prefHeight="43.0" prefWidth="141.0" style="-fx-background-color: grey;" text="EliminarProveedor" textFill="WHITE" />
+      <Label layoutX="14.0" layoutY="41.0" text="Nombre" />
+      <Label layoutX="33.0" layoutY="91.0" text="Rut" />
+      <Label layoutX="26.0" layoutY="146.0" text="email" />
+      <Label layoutX="24.0" layoutY="209.0" text="direccion" />
+      <Label layoutX="24.0" layoutY="264.0" text="categoria" />
+   </children>
+</AnchorPane>

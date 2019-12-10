@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="948.0" maxWidth="1904.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="948.0" prefWidth="1904.0" scaleShape="false" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.PrincipalController">
+   <children>
+      
+      <JFXButton fx:id="volverLogin" layoutX="14.0" layoutY="892.0" onAction="#accionVolverLoggin" prefHeight="47.0" prefWidth="112.0" style="-fx-background-color: #01A9DB;" text="Cambiar Usuario" textFill="WHITE" />
+      <JFXButton fx:id="salir" layoutX="1781.0" layoutY="892.0" onAction="#salir" prefHeight="47.0" prefWidth="99.0" style="-fx-background-color: #01A9DB;" text="Salir" textFill="WHITE" />
+      <VBox layoutX="47.0" layoutY="230.0" prefHeight="359.0" prefWidth="118.0">
+         <children>
+            <JFXButton fx:id="btnVender" onAction="#abrirVentas" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #01A9DB;" text="Vender" textFill="WHITE" />
+            <JFXButton fx:id="btnRevisarBoletas" onAction="#abrirReporte" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #01A9DB;" text="Revisar Boletas" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnIngresarProveedor" onAction="#actionProveedor" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #01A9DB;" text="Proveedor" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnProducto" onAction="#abrirProducto" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #01A9DB;" text="Producto" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnIngresarCotizacion" onAction="#abrirCotizacion" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #01A9DB;" text="Cotizaciones" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnUsuario" onAction="#abrirUsuarios" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #01A9DB;" text="usuarios" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnCliente" onAction="#abrirCliente" prefHeight="32.0" prefWidth="124.0" style="-fx-background-color: #01A9DB;" text="Cliente" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+      <Label layoutX="439.0" layoutY="54.0" prefHeight="47.0" prefWidth="137.0" text="SESION:">
+         <font>
+            <Font name="Yu Gothic UI Light" size="32.0" />
+         </font></Label>
+      <Label fx:id="nombreUsuario" layoutX="613.0" layoutY="54.0" prefHeight="47.0" prefWidth="718.0">
+         <font>
+            <Font name="Yu Gothic UI Light" size="32.0" />
+         </font></Label>
+      <Label fx:id="nivelUsuario" layoutX="1323.0" layoutY="54.0" prefHeight="47.0" prefWidth="343.0" style="-fx-background-color: #FFFFFF;">
+         <font>
+            <Font name="Yu Gothic UI Light" size="32.0" />
+         </font></Label>
+      <Pane fx:id="Pan" layoutX="244.0" layoutY="148.0" prefHeight="543.0" prefWidth="879.0" />
+   </children>
+</AnchorPane>

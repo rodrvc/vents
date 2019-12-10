@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="1500.0" style="-fx-border-color: grey; -fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.ProductoController">
+   <children>
+      <TableView fx:id="tablaProductos" layoutX="683.0" layoutY="36.0" prefHeight="336.0" prefWidth="782.0">
+        <columns>
+          <TableColumn fx:id="clmCodigoProducto" prefWidth="113.0" text="Codigo" />
+          <TableColumn fx:id="clmNombreProducto" prefWidth="112.0" text="Nombre" />
+            <TableColumn fx:id="clmDescripcionProducto" prefWidth="201.0" text="Descripcion" />
+            <TableColumn fx:id="clmProveedorProducto" prefWidth="75.0" text="Proveedor" />
+            <TableColumn fx:id="clmStock" prefWidth="101.0" text="Stock" />
+            <TableColumn fx:id="clmPrecioProducto" prefWidth="179.0" resizable="false" text="Precio" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtCodigo" layoutX="322.0" layoutY="81.0" promptText="Codigo" />
+      <TextField fx:id="txtNombre" layoutX="322.0" layoutY="145.0" promptText="Nombre del Producto" />
+      <TextField fx:id="txtDescripcion" layoutX="322.0" layoutY="427.0" prefHeight="31.0" prefWidth="299.0" promptText="Descripcion" />
+      <JFXComboBox fx:id="cbProveedor" layoutX="322.0" layoutY="341.0" prefHeight="31.0" prefWidth="187.0" promptText="Proveedor" />
+      <TextField fx:id="txtPrecio" layoutX="322.0" layoutY="213.0" promptText="Precio" />
+      <TextField fx:id="txtStock" layoutX="322.0" layoutY="281.0" promptText="Stock" />
+      <JFXButton fx:id="btnAgregarProducto" layoutX="683.0" layoutY="412.0" onAction="#actionButtonAgregarProducto" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: #32c8ff;" text="Agregar" textFill="WHITE" />
+      <JFXButton fx:id="btnEliminarProducto" layoutX="889.0" layoutY="412.0" onAction="#actionEliminarProducto" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: grey;" text="Eliminar" textFill="#f8f8f8" />
+      <JFXButton fx:id="btnModificar" layoutX="1074.0" layoutY="412.0" onAction="#accionModificar" prefHeight="47.0" prefWidth="160.0" style="-fx-background-color: GREY;" text="MODIFICAR" textFill="WHITE" />
+      <JFXButton fx:id="btnLimpiar" layoutX="324.0" layoutY="484.0" onAction="#ActionLimpiarCampos" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: GREY;" text="Limpiar" textFill="WHITE" />
+      <Label layoutX="244.0" layoutY="86.0" text="Codigo" />
+      <Label layoutX="244.0" layoutY="150.0" prefHeight="21.0" prefWidth="62.0" text="Nombre" />
+      <Label layoutX="244.0" layoutY="218.0" prefHeight="21.0" prefWidth="62.0" text="Precio" />
+      <Label layoutX="244.0" layoutY="286.0" prefHeight="21.0" prefWidth="62.0" text="Stock" />
+      <Label layoutX="209.0" layoutY="432.0" prefHeight="21.0" prefWidth="120.0" text="Descripcion" />
+   </children>
+</AnchorPane>
