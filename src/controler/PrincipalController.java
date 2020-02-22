@@ -100,7 +100,7 @@ public class PrincipalController implements Initializable {
 
     @FXML
     private void abrirProducto(ActionEvent event) throws IOException {
-            Pane pane =  FXMLLoader.load(getClass().getResource("/view/Producto.fxml"));
+          Pane pane =  FXMLLoader.load(getClass().getResource("/view/Producto.fxml"));
          Pan.getChildren().setAll(pane);
         
     }

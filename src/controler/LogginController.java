@@ -74,11 +74,7 @@ public class LogginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-         
-       
-         
-         
-         
+
 
     }   
     
@@ -118,9 +114,6 @@ public class LogginController implements Initializable {
                    control.borrarBtn(user.getTipoUsuario().getIdUsuario()); // se refiere al id de tipo
                   Scene home_page_scene = new Scene(home_page_parent);
                   
-                  
-                  
-
                   Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                   
                   

@@ -5,14 +5,18 @@
  */
 package controler;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -50,6 +54,24 @@ public class ProductoController implements Initializable {
     private TableColumn<Producto, String> clmCodigoProducto;
     @FXML
     private TableColumn<Producto, Integer> clmStock;
+    @FXML
+    private TextField txtCodigo;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private TextField txtDescripcion;
+    @FXML
+    private JFXComboBox<?> cbProveedor;
+    @FXML
+    private TextField txtPrecio;
+    @FXML
+    private TextField txtStock;
+    @FXML
+    private JFXButton btnAgregarProducto;
+    @FXML
+    private JFXButton btnEliminarProducto;
+    @FXML
+    private JFXButton btnLimpiar;
 
     /**
      * Initializes the controller class.
@@ -58,10 +80,10 @@ public class ProductoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         llenar();
-        
     }    
     
     public void llenar(){
+        
         con = new Conexion();
         
         listaProducto = FXCollections.observableArrayList();
@@ -76,6 +98,18 @@ public class ProductoController implements Initializable {
         clmDescripcionProducto.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         clmStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         clmProveedorProducto.setCellValueFactory(new PropertyValueFactory<>("fkProveedor"));
+    }
+
+    @FXML
+    private void actionButtonAgregarProducto(ActionEvent event) {
+    }
+
+    @FXML
+    private void actionEliminarProducto(ActionEvent event) {
+    }
+
+    @FXML
+    private void ActionLimpiarCampos(ActionEvent event) {
     }
     
     
