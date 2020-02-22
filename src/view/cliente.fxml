@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="717.0" prefWidth="1749.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.UsuariosController">
+<AnchorPane id="AnchorPane" prefHeight="717.0" prefWidth="1749.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.clienteController1">
    <children>
-      <TableView fx:id="tablaUsuarios" editable="true" layoutX="610.0" layoutY="42.0" prefHeight="480.0" prefWidth="840.0" stylesheets="@tablecss.css">
+      <TableView fx:id="tablaUsuarios" editable="true" layoutX="610.0" layoutY="42.0" prefHeight="480.0" prefWidth="1025.0" stylesheets="@tablecss.css" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="610.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="42.0">
         <columns>
           <TableColumn fx:id="clmRut" prefWidth="106.0" styleClass=".tree-table-row-cell" text="RUT" />
           <TableColumn fx:id="clmNombre" onEditCommit="#editNombre" prefWidth="107.0" text="NOMBRE" />
@@ -22,9 +22,10 @@
             <TableColumn fx:id="clmMApellido" minWidth="0.0" onEditCommit="#onEditMApellido" prefWidth="85.0" text="M.APELLIDO" />
             
             <TableColumn fx:id="clmDireccion" onEditCommit="#onEditDireccion" prefWidth="152.0" text="DIRECCION" />
-            <TableColumn fx:id="clmCorreo" onEditCommit="#onEditCorreo" prefWidth="107.0" text="CORREO" />
-            <TableColumn fx:id="clmUsuario" onEditCommit="#onEditUsuario" prefWidth="107.0" text="USUARIO" />
-            <TableColumn fx:id="clmTipo" prefWidth="167.0" text="TIPO USUARIO" />
+            <TableColumn fx:id="clmCorreo" prefWidth="107.0" text="CORREO" onEditCommit="#onEditCorreo" />
+            <TableColumn fx:id="clmTelefono" prefWidth="107.0" text="TELEFONO" onEditCommit="#onEditTelefono"/>
+            <TableColumn fx:id="clmSegundoNombre" onEditCommit="#onEditSegundoNombre" prefWidth="167.0" text="SEGUNDO NOMBRE" />
+            <TableColumn fx:id="clmFechaNac" prefWidth="153.0" text="FECHA" />
         </columns>
          <effect>
             <Blend mode="SRC_ATOP">
@@ -70,18 +71,7 @@
          <font>
             <Font name="Yu Gothic UI Light" size="15.0" />
          </font></JFXTextField>
-      <JFXComboBox fx:id="cbCargo" layoutX="48.0" layoutY="383.0" prefHeight="31.0" prefWidth="238.0" promptText="cargo" />
-      <JFXTextField fx:id="txtNombreUsuario" focusColor="#04a8ef" layoutX="48.0" layoutY="505.0" prefHeight="31.0" prefWidth="238.0" promptText="nombre usuario" unFocusColor="#868686">
-         <font>
-            <Font name="Yu Gothic UI Light" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="txtContrasenia" focusColor="#04a8ef" layoutX="345.0" layoutY="505.0" prefHeight="31.0" prefWidth="238.0" promptText="Contraseña usuario" unFocusColor="#868686">
-         <font>
-            <Font name="Yu Gothic UI Light" size="15.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField fx:id="txtConfirContrasenia" focusColor="#04a8ef" layoutX="345.0" layoutY="586.0" prefHeight="31.0" prefWidth="238.0" promptText="Confirme contraseña " unFocusColor="#868686">
+      <JFXTextField fx:id="txtTelefono" focusColor="#04a8ef" layoutX="48.0" layoutY="343.0" prefHeight="31.0" prefWidth="238.0" promptText="Contraseña usuario" text="Telefono" unFocusColor="#868686">
          <font>
             <Font name="Yu Gothic UI Light" size="15.0" />
          </font>
@@ -91,5 +81,7 @@
             <Font name="Yu Gothic UI Regular" size="15.0" />
          </font>
       </Label>
+      <DatePicker fx:id="UidataPicker" layoutX="48.0" layoutY="451.0" prefHeight="39.0" prefWidth="199.0" />
+      <Label layoutX="48.0" layoutY="418.0" prefHeight="46.0" prefWidth="127.0" text="Fecha de nacimiento" />
    </children>
 </AnchorPane>

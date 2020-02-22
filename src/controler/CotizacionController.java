@@ -5,12 +5,33 @@
  */
 package controler;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import static com.itextpdf.kernel.pdf.PdfName.C;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.draw.ILineDrawer;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.AreaBreak;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.LineSeparator;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.pdfa.PdfADocument;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -39,11 +60,14 @@ import javafx.scene.control.cell.ComboBoxListCell;
 
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import javafx.util.Callback;
 import model.Cliente;
 import model.Conexion;
+import model.Cotizacion;
 import model.Detalle;
 import model.Producto;
 import model.Usuario;
@@ -54,9 +78,10 @@ import model.Venta;
  *
  * @author Rodrigo
  */
-public class VentaController implements Initializable {
+public class CotizacionController implements Initializable {
 
     private Conexion con;
+    public static String data = " "; 
 
     //private int numVenta = Venta.obtenerUltimaVenta(con.getConexion());
     private ObservableList<Producto> listaProducto;
@@ -66,7 +91,7 @@ public class VentaController implements Initializable {
     ///parametros de venta
     private Usuario usuario = null;
     private Producto producto = null;
-    private Venta venta = null;
+    private Cotizacion cotizacion = null;
     private int indiceItemDetalle = 0;
     private Cliente clienteObtenido = null;
     int cliente = 0;
@@ -121,7 +146,6 @@ public class VentaController implements Initializable {
     private TextField txtBuscarUsuario;
     @FXML
     private Label lblInstanciaVenta;
-    @FXML
     private TextField txtIntMontoPagoCliente;
 
     /**
@@ -133,7 +157,7 @@ public class VentaController implements Initializable {
 
         usuario = Usuario.obtenerUsuarioEnSession();
 
-        venta = instanciaDeVenta();
+        cotizacion = instanciaDeCotizacion();
         listaDetalle = FXCollections.observableArrayList();
         listaUsuario = FXCollections.observableArrayList();
         listaCliente = FXCollections.observableArrayList();
@@ -143,17 +167,12 @@ public class VentaController implements Initializable {
         tableEditable();
         spinereditable();
         llenarLista();
-        instanciaDeVenta();
+        instanciaDeCotizacion();
         valorSpiner();
-        txtIntMontoPagoCliente.setOnKeyTyped(event -> SoloNumerosEnteros(event));
-         btnRealizarVenta.setDisable(true);
-        lblInstanciaVenta.setText(String.valueOf(venta.getIdVenta()));
+        //txtIntMontoPagoCliente.setOnKeyTyped(event -> SoloNumerosEnteros(event));
+      
+        lblInstanciaVenta.setText(String.valueOf(cotizacion.getIdCotizacion()));
         
-        habilitarBtnRealizarVenta();
-        
-        
-    
-
     }
 
     public void valorSpiner() {
@@ -182,8 +201,6 @@ public class VentaController implements Initializable {
         clmStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
         clmProveedorProducto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProveedorProducto().getNombreProveedor()));
-        
-        
 
         // agregar el valor de la multiplicacion cantidad por percio de producto
         con.cerrarConexion();
@@ -201,8 +218,8 @@ public class VentaController implements Initializable {
 
         clmTotalCarritoCompras.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().CantidadProperty().get() * param.getValue().getProductoVenta().getPrecio()));
 
-        carritoDeCompra.setPlaceholder(new Label("No hay Articulos Agregados a la compra en la venta Nº " + venta.getIdVenta()));
-
+        carritoDeCompra.setPlaceholder(new Label("No hay Articulos Agregados a la compra en la venta Nº " + cotizacion.getIdCotizacion()));
+        
     }
 
     @FXML
@@ -262,109 +279,164 @@ public class VentaController implements Initializable {
 
     @FXML
     private void onActionBtnAgregarAlaLista(ActionEvent event) {
-       AgregarALaLista();
-    }
-    
-    
-    public void AgregarALaLista(){
-        boolean yaEstaEnLaLista = false;
-        
-         if (producto == null) {     
+        if (producto == null) {
             return;
         }
         con = new Conexion();
         indiceItemDetalle = +indiceItemDetalle + 1;
         Usuario a = null;
         cantidad = spinCantidad.getValue();
+        Venta Ficticia = new Venta(1, 1, 10, 1, "" , 0 );
+        
 
-        Detalle d = new Detalle(indiceItemDetalle, venta, producto, cantidad);
-     
-        if (d.getCantidad() <= producto.getStock()) {
-            /// verificar existencia
-            for (Detalle deta : listaDetalle) {
-                if (deta.getProductoVenta().getIdProducto() == producto.getIdProducto()) {
-                    deta.setCantidad(deta.getCantidad() + cantidad);
-                    yaEstaEnLaLista = true; 
-                }
-            }
-            if (!yaEstaEnLaLista) {
-                  listaDetalle.add(d);
-            }
-          
+        Detalle d = new Detalle(indiceItemDetalle, Ficticia, producto, cantidad);
 
-            modificarStock(producto, cantidad);
-
-            carritoDeCompra.refresh();
-            tablaProductos.refresh();
-            llenarLista();
-            // se acualiza el total de todas las compras 
-            total = total + clmTotalCarritoCompras.getCellData(d);
-            lblPrecio.setText(String.valueOf(total));
-
-            valorSpiner();
-        } else {
-            Alert alertaStock = new Alert(Alert.AlertType.ERROR);
+        if (d.getCantidad() >= producto.getStock()) {
+            Alert alertaStock = new Alert(Alert.AlertType.WARNING);
             alertaStock.setTitle("STOCK INSUFICIENTE");
+            alertaStock.setContentText("No hay unidades disponibles de este preducto, de todas formas se realizara la cotizacion, se sugiere recargar STOCK!");
             alertaStock.show();
+
         }
 
+        listaDetalle.add(d);
+        carritoDeCompra.refresh();
+        tablaProductos.refresh();
+        llenarLista();
+        // se acualiza el total de todas las compras 
+        total = total + clmTotalCarritoCompras.getCellData(d);
+        lblPrecio.setText(String.valueOf(total));
+
+        valorSpiner();
         cantidad = 1;  // se cierra 
-    
-    
+
     }
 
-    public int modificarStock(Producto p, int cantidadComprada) {
-        int stockNuevo = 0;
-        int stockAnterior = p.getStock();
-        stockNuevo = stockAnterior - cantidadComprada;
-        p.setStock(stockNuevo);
+    //public int modificarStock(Producto p, int cantidadComprada) {
+      //  int stockNuevo = 0;
+       // int stockAnterior = p.getStock();
+        //stockNuevo = stockAnterior - cantidadComprada;
+        //p.setStock(stockNuevo);
 
-        return stockNuevo;
-    }
+       // return stockNuevo;
+    //}
 
     @FXML
-    private void btnRealizarVenta(ActionEvent event) {
-
+    private void btnRealizarVenta(ActionEvent event) throws FileNotFoundException {
+        Boolean condicionesParaRealizarCotizacion = true; 
         if (listaDetalle.isEmpty()) {
-            Alert aler = new Alert(Alert.AlertType.ERROR);
+            condicionesParaRealizarCotizacion = false;
+            Alert aler = new Alert(Alert.AlertType.WARNING);
             aler.setTitle("LISTA VACIA");
             aler.setContentText("La lista de detalles esta vacia. Por favor seleccione productos para comprar");
             aler.show();
-        } else {
+            return;
+        } 
+        
+        if (clienteObtenido == null ) {
+            condicionesParaRealizarCotizacion = false;
+            Alert aler = new Alert(Alert.AlertType.ERROR);
+            aler.setTitle("NO SE ENCUENTRA CLIENTE");
+            aler.setContentText("Se debe seleccionar un Cliente");
+            txtBuscarUsuario.setFocusTraversable(true);
+            aler.show();
+            return;
+        }
+        if (condicionesParaRealizarCotizacion) 
+         {
             /////SE REALIZA CON EXITO
-            realizarVenta(); // trabaja con db
+            realizarCotizacion(); // trabaja con db
             reiniciarVenta();// ui
-            instanciaDeVenta();
-            lblInstanciaVenta.setText(String.valueOf(venta.getIdVenta()));
+            instanciaDeCotizacion();
+            lblInstanciaVenta.setText(String.valueOf(cotizacion.getIdCotizacion()));
         }
 
     }
 
-    public Venta instanciaDeVenta() {
+    public Cotizacion instanciaDeCotizacion() {
         con = new Conexion();
 
-        Venta instanciaVenta = new Venta(Venta.obtenerUltimaVenta(con.getConexion()), usuario.getIdUsuario(), cliente, cantidad, " " , 0);
-        venta = instanciaVenta;
+        Cotizacion instanciaCotizacion = new Cotizacion(Cotizacion.obtenerUltimaCotizacion(con.getConexion()), usuario.getIdUsuario(), cliente, " ", 1);
+        cotizacion = instanciaCotizacion;
         con.cerrarConexion();
-
-        return instanciaVenta;
+        carritoDeCompra.setPlaceholder(new Label("No hay Articulos Agregados a la compra en la venta Nº " + cotizacion.getIdCotizacion()));
+        return instanciaCotizacion;
     }
 
-    public void realizarVenta() {
-        //-------------------------------VENTA INGRESA A DB -------------------------
+    public void realizarCotizacion() throws FileNotFoundException {
         con = new Conexion();
-        Venta.insertarVenta(con.getConexion(), venta, usuario.getIdUsuario(), cliente , total); // SE REALIZA LA VENTA DB 
-        venta = instanciaDeVenta();
-        con.cerrarConexion();
-        con = new Conexion();
-        Detalle.insertarDetalle(con.getConexion(), listaDetalle);
 
-        con.cerrarConexion();
-        con = new Conexion();
-        Producto.modificarStock(con.getConexion(), listaDetalle);
-        alertaVentaRealizadaConExito();
-        instanciaDeVenta();
-       
+        FileChooser fileChooser = new FileChooser();
+
+        Window stage = tablaProductos.getScene().getWindow();
+        fileChooser.setTitle("Guardar Cotizacion");
+        fileChooser.setInitialFileName("Cotizacion" + cotizacion.getIdCotizacion());
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("textFile", "*.pdf"));
+        
+        try {
+            File file = fileChooser.showSaveDialog(stage); // se buscar directorio
+            fileChooser.setInitialDirectory(file.getParentFile());
+            String ruta = file.getAbsolutePath();
+
+            PdfWriter writer = new PdfWriter(ruta);
+            PdfDocument pdf = new PdfDocument(writer);
+
+            Document document = new Document(pdf);
+            document.add(new Paragraph("VENTS APLICATION COTIZACION").setBold().setMargin(30));
+            document.add(new Paragraph("Empresa: InacapCorps\nDireccion: Matteo Zambrano #3355\n Fecha:" + LocalDate.now() + "\nCliente: " + clienteObtenido.getNombre() + "  " + clienteObtenido.getApellidoP()));
+            document.add(new Paragraph(""));
+            
+            //----------------Table PDF ----------------------------
+            
+            float[] pointColumnWidths = {90F, 90F, 90F, 90F, 90F,};
+            Table table = new Table(pointColumnWidths).setMarginRight(30);
+
+            // Adding cells to the table       
+            table.addHeaderCell("Codigo");
+            table.addHeaderCell("Producto");
+            table.addHeaderCell("Precio");
+            table.addHeaderCell("Cantidad");
+            table.addHeaderCell("Total");
+            
+            int totalCotizacion = 0;
+            
+            for (Detalle detalle : listaDetalle) {
+                table.addCell(detalle.getProductoVenta().getCodigo());
+                table.addCell(detalle.getProductoVenta().getNombreProducto());
+                table.addCell(String.valueOf(detalle.getProductoVenta().getPrecio()));
+                table.addCell(String.valueOf(detalle.getCantidad()));
+                int totalPrecio = detalle.getCantidad() * detalle.getProductoVenta().getPrecio();
+                table.addCell(String.valueOf(totalPrecio));
+                totalCotizacion = totalCotizacion + totalPrecio;
+            }
+
+            //String imageFile = "D:\\'OneDrive - Universidad Tecnologica de Chile INACAP'\\Attachments\\tercer semestre\\diseño-de-aplicaciones\\imgVents.presentaci.jpg"; 
+            //ImageData data = ImageDataFactory.create(imageFile);
+            //Image img = new Image(data); 
+            // img.setFixedPosition(100, 250);
+            // document.add(img);
+            document.add(table);
+            
+            //---------------END TABLE----------------
+            
+            //Agradar al documento.. 
+            document.add(new Paragraph("TOTAL COTIZACION:      " + String.valueOf(totalCotizacion)).setBold().setMargin(60));
+            document.add(new Paragraph("Esta Cotizacion tiene una validez de 30 dias").setMarginLeft(20));
+
+            document.close();
+            Cotizacion.insertarCotizacion(con.getConexion(), cotizacion, cliente, usuario.getIdUsuario(), Integer.parseInt(lblPrecio.getText()));
+            cotizacion = instanciaDeCotizacion();
+            con.cerrarConexion();
+
+            alertaCotizacionImpresaConExito();
+            instanciaDeCotizacion();
+            
+
+        } catch (Exception e) {
+            System.out.println("no pude ser posible");
+        }
+
+        // System.out.println(directorioSeleccionado.getAbsolutePath());
     }
 
     public void reiniciarVenta() {
@@ -384,99 +456,41 @@ public class VentaController implements Initializable {
         lblPrecio.setText("0");
         previewPrecio.setText("");
         total = 0 ; 
-        txtIntMontoPagoCliente.setText("0");
-             carritoDeCompra.setPlaceholder(new Label("No hay Articulos Agregados a la compra en la venta Nº " + venta.getIdVenta()));
-              tablaProductos.requestFocus();
-        tablaProductos.getSelectionModel().select(0);
-        tablaProductos.getFocusModel().focus(0);
+
     }
 
     @FXML
     private void setUsuarioInstanciaVenta(ActionEvent event) {
         String rut = txtBuscarUsuario.getText();
-        boolean seBuscaPeroNoSeEncuentra = false ; 
+        boolean clienteEncontrado = false ; 
+        
         if (rut.trim().equals("")) {
-            AlertasGeneral(1);
+            AlertaCotizacionBtnBuscarCliente(1);
             return;
         }
 
         for (Cliente c : listaCliente) {
-         
+          
             if (rut.equals(c.getRut_cliente())) {
-                System.out.println("Se Encuentra cliente en la db");
                 clienteObtenido = c;
                 cliente = clienteObtenido.getIdCliente();
                 System.out.println(c.getRut_cliente());
-                venta.setIdCliente(c.getIdCliente());
+                cotizacion.setFkCliente(c.getIdCliente());
                 lblPreviewCliente.setText(c.getNombre() + "    " + c.getApellidoP());
+                clienteEncontrado = true;
                 return;
-                
-            }else {
-                seBuscaPeroNoSeEncuentra = false ; 
             }
         }
-        
-        if (!seBuscaPeroNoSeEncuentra) {
-                AlertasGeneral(2);
+        if (!clienteEncontrado) {
+             AlertaCotizacionBtnBuscarCliente(2);
         }
     }
     
-    public void AlertasGeneral(int tipo){
-        switch (tipo) {
-            case 1:
-                          Alert alertCampoVacio = new Alert(Alert.AlertType.INFORMATION);
-                         alertCampoVacio.setHeaderText("Cliente No encontrado");
-                         alertCampoVacio.setTitle("RUT INVALIDOº ");
-                         alertCampoVacio.setContentText("Debes ingresar un rut valido y que este registrado en la base de datos");
-                         alertCampoVacio.show();
-                
-                
-                break;
-                  case 2:
-                         Alert alertNoSeEncuentraCliente= new Alert(Alert.AlertType.INFORMATION);
-                         alertNoSeEncuentraCliente.setHeaderText("Cliente No encontrado");
-                         alertNoSeEncuentraCliente.setTitle("Campo Vacioº ");
-                         alertNoSeEncuentraCliente.setContentText("Debes ingresar un rut valido y que este registrado en la base de datos");
-                         alertNoSeEncuentraCliente.show();
-                break;
-            default:
-                throw new AssertionError();
-        }
-    
-    }
-
-    public void alertaVentaRealizadaConExito() {
-        String msjClienteEstaOno = "";
    
-        if (clienteObtenido == null) {
-            msjClienteEstaOno = " no especificado";
-            
-           
-        } else {
-            msjClienteEstaOno = clienteObtenido.getNombre() + "  " + clienteObtenido.getApellidoP() + " \n,rut : " + clienteObtenido.getRut_cliente();
-        }
-        
-          int montoPagoCliente = Integer.parseInt(txtIntMontoPagoCliente.getText());
-          int precioDeLaVenta = PrecioTotal;
-          
-          int vuel=  montoPagoCliente - precioDeLaVenta; 
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Venta Realizada Con Exito");
-        alert.setTitle("Venta Nº " + venta.getIdVenta());
-        
-        
-
-        alert.setContentText("USUARIO:  " + usuario.getPrimerNom().toUpperCase() + "  " + usuario.getPrimerApe().toUpperCase()+ "\n al CLIENTE:  " + msjClienteEstaOno.toUpperCase() + "\n CAMBIO:  " + vuel);
-        alert.show();
-        alert.setWidth(400);
-        alert.setHeight(600);
-        
-
-    }
+    
 
     public void SoloNumerosEnteros(KeyEvent keyEvent) {
-        
         System.out.println("");
         
         try {
@@ -488,51 +502,58 @@ public class VentaController implements Initializable {
         }
     }
     
-   
     
-    public void habilitarBtnRealizarVenta() {
-        int valorNuevo = 0;        
-        int valorAntiguo = 0;        
-        
-        try {
-            txtIntMontoPagoCliente.textProperty().addListener((observable, oldValue, newValue) -> {
-               
-                if (newValue.length() > 8) {
-                        txtIntMontoPagoCliente.setText(oldValue);
-                    }
-                 if (newValue.equals("")) {
-                     // no es posble hacer el calculo
-                    btnRealizarVenta.setDisable(true);
-                    
-                } else {
-                     /// es posible
-                    int montoPagoCliente = Integer.parseInt(newValue);
-                    int extraerPrecioDeVenta = Integer.parseInt(lblPrecio.getText());
-                    int precioDeLaVenta = extraerPrecioDeVenta;
-                    
-                    System.out.println(montoPagoCliente);
-                    System.out.println(precioDeLaVenta);
-                    
-                    if (montoPagoCliente >= precioDeLaVenta && precioDeLaVenta != 0  ) {
-                        btnRealizarVenta.setDisable(false);
-                        PrecioTotal = precioDeLaVenta;
-                    }else
-                    {btnRealizarVenta.setDisable(true);}
-                 }
-            });
-        } catch (Exception e) {
-            System.out.println("ERROR");
+    
+    
+    
+    
+    //**==================ALERTAS=======================**// 
+    
+    
+     public void AlertaCotizacionBtnBuscarCliente(int causa){
+        switch (causa) {
+            case 1:
+                Alert alertaCampoVacioCleinte = new Alert(Alert.AlertType.ERROR);
+                alertaCampoVacioCleinte.setTitle("Campo sin Datos");
+                alertaCampoVacioCleinte.setContentText("Por favor ingresa el rut del cliente");
+                alertaCampoVacioCleinte.show();
+                
+                break;
+             case 2:
+                 Alert alertaNoSeEncuentraCliente = new Alert(Alert.AlertType.ERROR);
+                alertaNoSeEncuentraCliente.setTitle("No se encuentra cliente");
+                alertaNoSeEncuentraCliente.setContentText("Asegurate de digitar correctamente el rut del cliente");
+                alertaNoSeEncuentraCliente.show();
+                lblPreviewCliente.setText("Cliente No especificado");
+                txtBuscarUsuario.setFocusTraversable(true);
+                 txtBuscarUsuario.setText("");
+                break;     
+           
         }
     }
+     
+     
+     public void alertaCotizacionImpresaConExito() {
+        String msjClienteEstaOno = "";
+   
+        if (clienteObtenido == null) {
+            msjClienteEstaOno = " Cliente no especificado";
+        } else {
+            msjClienteEstaOno = clienteObtenido.getNombre().toUpperCase() + "  " + clienteObtenido.getApellidoP().toUpperCase() + " \nRut : " + clienteObtenido.getRut_cliente();
+        }
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Cotizacion Realizada Con Exito");
+        alert.setTitle("Cotizacion Nº " + cotizacion.getIdCotizacion());
+        
+        
 
-    @FXML
-    private void onMouseClickedAgregarProductoALista(MouseEvent event) {
-        if (event.getClickCount() == 2) //Checking double click
-    {
-            AgregarALaLista();
+        alert.setContentText("USUARIO:  " + usuario.getPrimerNom().toUpperCase() + "  " + usuario.getPrimerApe().toUpperCase()+ "\n al CLIENTE:  " + msjClienteEstaOno.toUpperCase());
+        alert.show();
+        alert.setWidth(550);
+        alert.setHeight(600);
     }
-            
-    }
+
 }
 
 

@@ -340,6 +340,8 @@ public class Usuario {
     }
         
         
+        
+        
          public static void editarTipo(String tipo, int idUsuario, Connection con){
              
             int puesto = 0;
@@ -382,7 +384,11 @@ public class Usuario {
         public static void borrarSession(){
             usuarioSession = null ; 
         }
-    
+        
+        @Override
+        public String toString(){
+            return getPrimerNom() + " " + getPrimerApe() + "  " + "[" + getRut() + "]" ;
+        }
     
    
     

@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="783.0" prefWidth="1386.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.VentaController">
+<AnchorPane id="AnchorPane" prefHeight="783.0" prefWidth="1386.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.CotizacionController">
    <children>
-      <TableView fx:id="tablaProductos" layoutX="52.0" layoutY="46.0" onMouseClicked="#onMouseClickedAgregarProductoALista" prefHeight="222.0" prefWidth="686.0" stylesheets="@tablecss.css">
+      <TableView fx:id="tablaProductos" layoutX="52.0" layoutY="46.0" prefHeight="222.0" prefWidth="686.0" stylesheets="@tablecss.css">
         <columns>
           <TableColumn fx:id="clmCodigoProducto" prefWidth="75.0" text="CODIGO" />
           <TableColumn fx:id="clmNombreProducto" prefWidth="96.0" text="NOMBRE" />
@@ -45,7 +45,7 @@
       <JFXButton fx:id="btnAgregarAlaLista" layoutX="485.0" layoutY="350.0" onAction="#onActionBtnAgregarAlaLista" prefHeight="35.0" prefWidth="167.0" style="-fx-background-color: rgb(0,160,220);" text="AGREGAR A LISTA" textFill="WHITE" />
       <TextField fx:id="txtBuscarUsuario" layoutX="385.0" layoutY="529.0" prefHeight="33.0" prefWidth="175.0" promptText="Rut cliente" />
       <Separator layoutX="46.0" layoutY="410.0" prefHeight="1.0" prefWidth="677.0" />
-      <Label layoutX="51.0" layoutY="421.0" prefHeight="21.0" prefWidth="107.0" text="VENTA">
+      <Label layoutX="51.0" layoutY="421.0" prefHeight="34.0" prefWidth="160.0" text="Cotizacion">
          <font>
             <Font name="Yu Gothic UI Regular" size="23.0" />
          </font></Label>
@@ -53,9 +53,9 @@
          <font>
             <Font name="Yu Gothic UI Light" size="15.0" />
          </font></Label>
-      <Label fx:id="lblPreviewCliente" layoutX="145.0" layoutY="535.0" prefHeight="21.0" prefWidth="107.0" text="No Especificado">
+      <Label fx:id="lblPreviewCliente" layoutX="148.0" layoutY="532.0" prefHeight="21.0" prefWidth="241.0" text="Debe Ingresar Cliente">
          <font>
-            <Font name="Yu Gothic UI Semibold" size="15.0" />
+            <Font name="Yu Gothic UI Semibold" size="19.0" />
          </font></Label>
       <Label layoutX="30.0" layoutY="305.0" prefHeight="21.0" prefWidth="107.0" text="Producto">
          <font>
@@ -85,18 +85,12 @@
          <font>
             <Font name="Yu Gothic Light" size="15.0" />
          </font></JFXButton>
-      <Label layoutX="58.0" layoutY="14.0" prefHeight="21.0" prefWidth="82.0" text="Venta Nº : " />
+      <Label layoutX="58.0" layoutY="14.0" prefHeight="21.0" prefWidth="142.0" text="Cotizacion Nº : " />
       <Label fx:id="lblInstanciaVenta" layoutX="142.0" layoutY="14.0" prefHeight="21.0" prefWidth="82.0" />
       <IntegerValidator layoutX="908.0" layoutY="645.0" />
-      <JFXButton fx:id="btnRealizarVenta" layoutX="1030.0" layoutY="628.0" onAction="#btnRealizarVenta" prefHeight="65.0" prefWidth="142.0" style="-fx-background-color: rgb(0,160,220);" text="VENTA" textFill="WHITE">
+      <JFXButton fx:id="btnRealizarVenta" layoutX="996.0" layoutY="645.0" onAction="#btnRealizarVenta" prefHeight="65.0" prefWidth="233.0" style="-fx-background-color: rgb(0,160,220);" text="COTIZACION" textFill="WHITE">
          <font>
             <Font name="Yu Gothic UI Semibold" size="24.0" />
          </font></JFXButton>
-      <TextField fx:id="txtIntMontoPagoCliente" layoutX="115.0" layoutY="644.0" prefHeight="33.0" prefWidth="167.0" promptText="monto a pagar" />
-      <Label layoutX="51.0" layoutY="650.0" prefHeight="21.0" prefWidth="107.0" text="Pago">
-         <font>
-            <Font name="Yu Gothic UI Light" size="15.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

@@ -1,10 +1,11 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package model;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -171,6 +172,7 @@ String telefono) {
                     String correo = result.getString("correo");
                     String fechadenacimiento = result.getString("fecha_nac");
                     String rut = result.getString("rut_cliente");
+                    
                     String telefono = result.getString("telefono");
               
                    
@@ -192,10 +194,164 @@ String telefono) {
         return cliente;
     }
         
+        
+        
+        public  void agregarCliente(Connection con){
+            
+            
+             try {
+                 //INSERT INTO `vents`.`cliente` (`id_cliente`, `nombre`, `nombreseg`, `apellido_p`, `apellido_m`, `direccion`, `correo`, `fecha_nac`, `rut_cliente`, `telefono`) VALUES ('12', 'david', 'fernando', 'dorado', 'arias', 'av. lillo', 'ddorado@inversionesgold.cl', '1992-07-22', '19999999-9', '99898778');x`
+            String sql = "INSERT INTO `vents`.`cliente` (`nombre`, `nombreseg` ,`apellido_p`, `apellido_m`, `direccion`, `correo`, `fecha_nac`, `rut_cliente`, `telefono`) VALUES (  ?, ? , ? , ? , ? , ?, ? , ? , ?);";
+            CallableStatement cs = con.prepareCall(sql);
+            
+            //cs.setInt(1, 0) ;
+             cs.setString(1, nombre.get());
+             cs.setString(2, nombreSegundo.get());
+             cs.setString(3, apellidoP.get());
+             cs.setString(4, apellidoM.get());
+             cs.setString(5, direccion.get());
+             cs.setString(6, correo.get());
+             cs.setString(7, fecha_nac.get());
+             cs.setString(8, rut_cliente.get());
+            cs.setString(9, telefono.get());
+             cs.executeUpdate(); 
+             System.out.println("Operacion Exitosa");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+                 System.err.print(e);
+        }
+    }
+        
+        /***************************EDICION DE PROPIEDADES*************************************/
+        
+        public void editarNombre(String nombre, Connection con){
+        int id = idCliente.get();
+        
+        try {
+            String sql  = "update cliente set nombre =  ?  where `id_cliente` =  ? " ;
+            CallableStatement cs = con.prepareCall(sql);
+            cs.setString(1, nombre);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+            System.out.println("Exitoso" + this.nombre.get() + "fue cambiado por " + nombre);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        }
+        
+        public void editarSegundoNombre(String segNombre, Connection con){
+        int id = idCliente.get();
+        
+        try {
+            String sql  = "update cliente set nombreseg =  ?  where `id_cliente` =  ? " ;
+            CallableStatement cs = con.prepareCall(sql);
+            cs.setString(1, segNombre);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+            System.out.println("Exitoso" + this.nombreSegundo.get() + "fue cambiado por " + segNombre);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+          
+        public void editarApellido(String apellido, Connection con){
+        int id = idCliente.get();
+        
+        try {
+            String sql  = "update cliente set apellido_p =  ?  where `id_cliente` =  ? " ;
+            CallableStatement cs = con.prepareCall(sql);
+            cs.setString(1, apellido);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+            System.out.println("Exitoso" + this.apellidoP.get() + "fue cambiado por " + apellido);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+        
+         public void editarSegundoApellido(String segundoApellido, Connection con){
+        int id = idCliente.get();
+        
+        try {
+            String sql  = "update cliente set apellido_m =  ?  where `id_cliente` =  ? " ;
+            CallableStatement cs = con.prepareCall(sql);
+            cs.setString(1, segundoApellido);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+            System.out.println("Exitoso" + this.apellidoM.get() + "fue cambiado por " + segundoApellido);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+         
+         public void editarDireccion(String direccion, Connection con){
+        int id = idCliente.get();
+        
+        try {
+            String sql  = "update cliente set direccion =  ?  where `id_cliente` =  ? " ;
+            CallableStatement cs = con.prepareCall(sql);
+            cs.setString(1, direccion);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+            System.out.println("Exitoso" + this.direccion.get() + "fue cambiado por " + direccion);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+         
+         public void editarCorreo(String correo, Connection con){
+        int id = idCliente.get();
+        
+        try {
+            String sql  = "update cliente set correo =  ?  where `id_cliente` =  ? " ;
+            CallableStatement cs = con.prepareCall(sql);
+            cs.setString(1, correo);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+            System.out.println("Exitoso" + this.correo.get() + "fue cambiado por " + correo);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+         
+          public void editarTelefono(String telefono, Connection con){
+        int id = idCliente.get();
+        
+        try {
+            String sql  = "update cliente set telefono =  ?  where `id_cliente` =  ? " ;
+            CallableStatement cs = con.prepareCall(sql);
+            cs.setString(1, telefono);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+            System.out.println("Exitoso" + this.telefono.get() + "fue cambiado por " + telefono);
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+          
+          
+
+}
+        
                     
         
         
         
         
         
-}
+

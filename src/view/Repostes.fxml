@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="717.0" prefWidth="1749.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.RepostesController">
+   <children>
+      <TableView fx:id="tablaVentas" layoutX="536.0" layoutY="40.0" prefHeight="424.0" prefWidth="757.0">
+        <columns>
+          <TableColumn fx:id="clmIdVenta" prefWidth="129.0" text="Venta Nº" />
+          <TableColumn fx:id="clmIdUsuario" prefWidth="174.0" text="Vendedor" />
+            <TableColumn fx:id="clmClienteTbVenta" prefWidth="204.0" text="Cliente" />
+            <TableColumn fx:id="clmFecha" prefWidth="121.0" text="Fecha" />
+            <TableColumn fx:id="clmTotal" prefWidth="128.0" text="Total " />
+        </columns>
+      </TableView>
+      <TableView fx:id="tablaBuscarCliente" layoutX="55.0" layoutY="314.0" prefHeight="128.0" prefWidth="415.0">
+        <columns>
+          <TableColumn fx:id="clmRutClienteTbCliente" prefWidth="73.0" text="Rut" />
+          <TableColumn fx:id="clmNombreTbCliente" prefWidth="123.0" text="Nombre" />
+            <TableColumn fx:id="clmApellidoTbCliente" prefWidth="213.0" text="Apellido" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnGeneralReporte" layoutX="548.0" layoutY="506.0" onAction="#btnActionGenerarReporte" prefHeight="67.0" prefWidth="198.0" style="-fx-background-color: #32c8ff;" text="GENERAR REPORTE" textFill="WHITE" />
+      <JFXDatePicker fx:id="datePickerInicio" defaultColor="#32c8ff" layoutX="58.0" layoutY="184.0" prefHeight="21.0" prefWidth="154.0" promptText="fecha inicio" />
+      <JFXDatePicker fx:id="datePickerFinal" defaultColor="#32c8ff" layoutX="308.0" layoutY="184.0" prefHeight="21.0" prefWidth="154.0" promptText="fecha final" />
+      <Label layoutX="869.0" layoutY="521.0" prefHeight="42.0" prefWidth="111.0" text="TOTAL VENTAS" />
+      <Label fx:id="idTotal" layoutX="982.0" layoutY="521.0" prefHeight="49.0" prefWidth="92.0" textFill="#23bc30">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="22.0" />
+         </font></Label>
+      <Line endX="-85.0" endY="390.0" layoutX="583.0" layoutY="50.0" startX="-85.0" startY="-29.0" />
+      <ChoiceBox fx:id="idListVendedores" layoutX="58.0" layoutY="94.0" prefHeight="31.0" prefWidth="404.0" />
+   </children>
+</AnchorPane>

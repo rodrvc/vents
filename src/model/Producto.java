@@ -11,6 +11,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 
 public class Producto {
@@ -186,6 +188,74 @@ public class Producto {
                 System.out.println(e);
             }
         }
-
     }
+    
+    
+    public void insertarProducto(Connection con) {
+        try {
+            //
+            String sql = " insert into `vents`.`producto` (`fproveedor`, `nombre_producto` , `precio` , `descripcion`, `stock` , `codigo`) Values (? , ?  , ? , ? , ? , ? );";
+            CallableStatement cs = con.prepareCall(sql);
+            int pro =  proveedorProducto.getIdProveedor();
+            System.out.println(pro);
+
+            
+            cs.setInt(1, pro);
+            cs.setString(2, nombreProducto.get());
+            cs.setInt(3, precio.get());
+            cs.setString(4, descripcion.get());
+            cs.setInt(5, stock.get());
+            cs.setString(6, codigo.get());
+            
+            
+            cs.executeUpdate();
+            System.out.println("Se ingresa Producto");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void eliminarProducto(Connection con){
+         try {
+                String sql = "DELETE FROM `vents`.`producto` WHERE (`id_producto` = ? )";
+                CallableStatement cs = con.prepareCall(sql);
+                cs.setInt(1, idProducto.get());
+                System.out.println("Se ha actualizado el stock se ha eliminado el producto");
+                   cs.executeUpdate();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    
+    public void modificarProducto(Connection con){
+        try {
+                String sql = "update producto set fproveedor =  ?, nombre_producto = ? , precio = ? , descripcion = ?  , stock = ? , codigo = ? where `id_producto` =  ?";
+                CallableStatement cs = con.prepareCall(sql);
+                cs.setInt(1, proveedorProducto.getIdProveedor());
+                cs.setString(2, nombreProducto.get());
+                cs.setInt(3, precio.get());
+                cs.setString(3, descripcion.get());
+                cs.setInt(4, stock.get());
+                cs.setString(5, codigo.get());
+                cs.setInt(6, idProducto.get());
+                
+                cs.executeUpdate();
+
+                System.out.println("Se ha actualizado el stock del producto");
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        
+    
+    }
+        
+    
+
+
+
+
 }
+
+    
+
